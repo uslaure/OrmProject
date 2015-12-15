@@ -1,11 +1,13 @@
 <?php
- 
+
+require_once('log/log.php');
+
 class Database
 {
 	private $host;
 	private $user;
 	private $pass;
-	private $dbname = true;
+	private $dbname;
 	
 	private static $instance;
 	
@@ -35,17 +37,33 @@ class Database
 		return self::$instance;
 	}
 	
-	function connect($host, $user, $pass, $dbname)
+
+	static public function prepare(){
+		return self::$instance;
+
+	}
+
+	static public function execute(){
+		return self::$instance;
+
+	}
+
+	static public function fetchAll(){
+		return self::$instance;
+	}
+
+
+	function connect($host, $user, $pass,$dbname)
 	{
 		$this->host = $host = 'localhost';
 		$this->user = $user = 'root';
-		$this->pass = $pass = '' ;
+		$this->pass = $pass = '';
 		$this->dbname = $dbname;
 		
 		$this->connection = mysqli_connect($this->host, $this->user, $this->pass, $this->dbname);
 		if (mysqli_connect_errno())
 		{
-			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			die("Failed to connect to MySQL: " . mysqli_connect_error());
 		}
 	}
 	
@@ -113,20 +131,29 @@ class Database
 		$this->orderby=$orderby;
 		return $this;
 	}
+	function Join($join){
+		$this->join=$join;
+		return $this;
+	}
 	
 	function result()
 	{
-		$query = "SELECT ".join(",", $this->selectables)." FROM {$this->table}";
+		try{
+			$query = "SELECT ".join(",", $this->selectables)." FROM {$this->table}";
 		if (!empty($this->whereclause))
 			$query .= " WHERE {$this->whereclause} ";
 		if (!empty($this->limit))
 			$query .= " LIMIT {$this->limit} ";
 		if (!empty($this->orderby))
 			$query .= " ORDERBY {$this->orderby} ";
+		if(!empty($this->join))
+			$query .= "JOIN {$this->join}";
 		$this->executeQuery($query);
+			var_dump($query);
+		}catch(Exception $e){
+				$err = new ErrorLog;
+				die('Il y a eu une erreur.');
+		}
 	}
-	
 }
- 
- 
-?>
+

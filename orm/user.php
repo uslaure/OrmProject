@@ -6,7 +6,7 @@
 	// Ajouter un user dans la base de données
 	
 	$person = new Person();
-	$data = array('name'=>'Bruno','age'=>'21','citizenship'=>'Belgium');
+	$data = array('name'=>'Tommy','age'=>'20','citizenship'=>'American');
 
 	$person->bind($data);
 	$person->add();
@@ -41,12 +41,12 @@
 	$person = new Person();
 	$person->age = '20';
 	$person->load();
-	$data = array('name'=>'Laure-Ashley','age'=>'20','citizenship'=>'french');
+	$data = array('name'=>'Laure-Ashley','age'=>'21','citizenship'=>'french');
 	$person->bind($data);
 	$person->update();
 	
 	//Supprimer un user par l'id 
 	$person = new Person();
-	$person->id= '557';	
+	$person->id= '611';	
 	$person->remove();
 	

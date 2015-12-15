@@ -16,11 +16,10 @@ p{
 
 
 <?php
- 
+	require('orm/log/log.php');
+ 	require('orm/autoload.php');
 	require('orm/database.php');
 	require('orm/entity.php');
-	require('orm/person.php');
-	// require('orm/creationTable.php');
+	require('orm/Person.php');
 	require('orm/user.php');
-	// require('orm/deleteTable.php');
 ?>
